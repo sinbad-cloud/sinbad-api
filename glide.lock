@@ -1,0 +1,49 @@
+hash: f468d31037ba5aa10615a350278ad3231a4cf8b35a87f1fd0b71616464f04fcf
+updated: 2016-04-03T12:56:55.770378728+10:00
+imports:
+- name: github.com/cenkalti/backoff
+  version: 32cd0c5b3aef12c76ed64aaf678f6c79736be7dc
+- name: github.com/dancannon/gorethink
+  version: edc7a6a68e2d8015f5ffe1b2560eed989f8a45be
+- name: github.com/golang/protobuf
+  version: dda510ac0fd43b39770f22ac6260eb91d377bce3
+  subpackages:
+  - proto
+- name: github.com/hailocab/go-hostpool
+  version: e80d13ce29ede4452c43dea11e79b9bc8a15b478
+- name: github.com/Sirupsen/logrus
+  version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+- name: github.com/spf13/pflag
+  version: 7f60f83a2c81bc3c3c0d5297f61ddfa68da9d3b7
+- name: golang.org/x/net
+  version: 3e8a7b0329d536af18e227bb21b6da4d1dbbe180
+  subpackages:
+  - context
+  - http2
+  - trace
+  - http2/hpack
+  - internal/timeseries
+- name: golang.org/x/sys
+  version: a60af9cbbc6ab800af4f2be864a31f423a0ae1f2
+  subpackages:
+  - unix
+- name: google.golang.org/grpc
+  version: 5aeebcd810669f5d8e682b352ad8128b253d21f8
+  subpackages:
+  - codes
+  - credentials
+  - grpclog
+  - internal
+  - metadata
+  - naming
+  - transport
+  - peer
+- name: gopkg.in/dancannon/gorethink.v1
+  version: ef48c048b4f1f4d923de4197e78c1b206c14fa4c
+  subpackages:
+  - encoding
+  - ql2
+  - types
+- name: gopkg.in/fatih/pool.v2
+  version: cba550ebf9bce999a02e963296d4bc7a486cb715
+devImports: []

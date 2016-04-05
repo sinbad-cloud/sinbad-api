@@ -1,0 +1,29 @@
+syntax = "proto3";
+package api;
+
+// DeploymentService is a Deployment service
+service DeploymentService {
+	rpc CreateDeployment (DeploymentRequest) returns (DeploymentJob) {}
+	rpc GetDeployment (DeploymentJob) returns (DeploymentRequest) {}
+}
+
+// DeploymentResponse represents a deployment request
+message DeploymentRequest {
+	string	app = 1;
+	string	image = 2;
+	int32	replicas = 3;
+	string	zone = 4;
+	int32	port = 5;
+	repeated string	env = 6;
+}
+
+// DeploymentJob represents a deployment job
+message DeploymentJob {
+	string id = 1;
+}
+
+// DeploymentResponse represents a deployment response
+message DeploymentResponse {
+	string message = 1;
+}
+

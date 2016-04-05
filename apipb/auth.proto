@@ -1,0 +1,22 @@
+syntax = "proto3";
+package api;
+
+// AuthService is the service that manages authentication
+service AuthService {
+	rpc SignUp (Credentials) returns (AuthResponse) {}
+	rpc SignIn (Credentials) returns (AuthResponse) {}
+	rpc Reset (Credentials) returns (AuthResponse) {}
+}
+
+// Credentials represents users credentials
+message Credentials {
+	string	email = 1;
+	string	password = 2;
+}
+
+// AuthResponse represents the response for the method
+message AuthResponse {
+	string status = 1;
+	string message = 2;
+}
+

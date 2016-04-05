@@ -1,0 +1,20 @@
+syntax = "proto3";
+package api;
+
+// AppService is an App service
+service AppService {
+	rpc CreateApp (App) returns (AppCreateResponse) {}
+	rpc GetApp (App) returns (App) {}
+}
+
+// App represents an app
+message App {
+	string	name = 1;
+	string	owner = 2;
+}
+
+// AppCreateResponse represents an app creation response
+message AppCreateResponse {
+	string status = 1;
+}
+
