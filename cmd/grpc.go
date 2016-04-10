@@ -11,6 +11,8 @@ import (
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
 	"bitbucket.org/jtblin/kigo-api/pkg/manager"
 
+	"fmt"
+
 	log "github.com/Sirupsen/logrus"
 	"github.com/dchest/uniuri"
 	"golang.org/x/crypto/bcrypt"
@@ -56,11 +58,11 @@ func (s *Server) SignIn(cxt context.Context, usr *api.User) (*api.AuthResponse, 
 	log.Infof("Signing user %s with context %#v", usr.Email, cxt)
 	u, err := s.UserManager.UserRepo.Get(usr.Email)
 	if err != nil {
-		log.Errorf("Get user error: %v", escapeError(err))
-		return nil, err
+		log.Errorf("Get user error: %v", err)
+		return nil, escapeError(err)
 	}
 	if err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(usr.Password)); err != nil {
-		return nil, errors.New("Incorrect password")
+		return nil, escapeError(errors.New("incorrect password"))
 	}
 	return &api.AuthResponse{Email: u.Email, Name: u.Name, Token: u.Token}, nil
 }
@@ -73,13 +75,12 @@ func (s *Server) Reset(cxt context.Context, usr *api.User) (*api.AuthResponse, e
 
 // SignUp creates a user in the DB
 func (s *Server) SignUp(cxt context.Context, usr *api.User) (*api.AuthResponse, error) {
-	// FIXME: do not log password
-	log.Infof("Receiving sign up request %#v with context %#v", usr, cxt)
+	log.Infof("Receiving sign up request %s with context %#v", usr.Email, cxt)
 	token := uniuri.New()
 	_, err := s.UserManager.UserRepo.Create(&user.User{Email: usr.Email, Name: usr.Name, Password: usr.Password, Token: token})
 	if err != nil {
-		log.Errorf("Create user error: %v", escapeError(err))
-		return nil, err
+		log.Errorf("Create user error: %v", err)
+		return nil, escapeError(err)
 	}
 	return &api.AuthResponse{Email: usr.Email, Name: usr.Name, Token: token}, nil
 }
@@ -89,8 +90,8 @@ func (s *Server) GetDeployment(cxt context.Context, job *api.DeploymentJob) (*ap
 	log.Infof("Getting deployment %s with context %#v", job.Id, cxt)
 	d, err := s.DeploymentManager.DeploymentRepo.Get(job.Id)
 	if err != nil {
-		log.Errorf("Get deployment error: %v", escapeError(err))
-		return nil, err
+		log.Errorf("Get deployment error: %v", err)
+		return nil, escapeError(err)
 	}
 	return &api.DeploymentRequest{App: d.App, Env: d.Env, Image: d.Image, Port: d.Port, Replicas: d.Replicas, Zone: d.Zone}, nil
 }
@@ -100,8 +101,8 @@ func (s *Server) CreateDeployment(cxt context.Context, d *api.DeploymentRequest)
 	log.Infof("Receiving deployment request %#v with context %#v", d, cxt)
 	ID, err := s.DeploymentManager.DeploymentRepo.Create(&deployment.Deployment{App: d.App, Env: d.Env, Image: d.Image, Port: d.Port, Replicas: d.Replicas, Zone: d.Zone})
 	if err != nil {
-		log.Errorf("Create deployment error: %v", escapeError(err))
-		return nil, err
+		log.Errorf("Create deployment error: %v", err)
+		return nil, escapeError(err)
 	}
 	return &api.DeploymentJob{Id: ID}, nil
 }
@@ -111,8 +112,8 @@ func (s *Server) GetApp(cxt context.Context, a *api.App) (*api.App, error) {
 	log.Infof("Getting app %s with context %#v", a.Name, cxt)
 	r, err := s.AppManager.AppRepo.Get(a.Name)
 	if err != nil {
-		log.Errorf("Get app error: %v", escapeError(err))
-		return nil, err
+		log.Errorf("Get app error: %v", err)
+		return nil, escapeError(err)
 	}
 	return &api.App{Name: r.Name, Owner: r.User}, nil
 }
@@ -123,14 +124,14 @@ func (s *Server) CreateApp(cxt context.Context, a *api.App) (*api.AppCreateRespo
 	_, err := s.AppManager.AppRepo.Create(&app.App{Name: a.Name, User: a.Owner})
 
 	if err != nil {
-		log.Errorf("Create app error: %v", escapeError(err))
-		return nil, err
+		log.Errorf("Create app error: %v", err)
+		return nil, escapeError(err)
 	}
 	return &api.AppCreateResponse{Name: a.Name}, nil
 }
 
 func escapeError(err error) error {
 	// https://github.com/grpc/grpc-go/issues/576
-	msg := strings.Replace(err.Error(), "\\n", " ", -1)
+	msg := strings.Replace(err.Error(), "\n", " ", -1)
 	return errors.New(msg)
 }
