@@ -3,20 +3,22 @@ package api;
 
 // AuthService is the service that manages authentication
 service AuthService {
-	rpc SignUp (Credentials) returns (AuthResponse) {}
-	rpc SignIn (Credentials) returns (AuthResponse) {}
-	rpc Reset (Credentials) returns (AuthResponse) {}
+	rpc SignUp (User) returns (AuthResponse) {}
+	rpc SignIn (User) returns (AuthResponse) {}
+	rpc Reset (User) returns (AuthResponse) {}
 }
 
-// Credentials represents users credentials
-message Credentials {
+// User represents a user
+message User {
 	string	email = 1;
-	string	password = 2;
+	string	name = 2;
+	string	password = 3;
 }
 
 // AuthResponse represents the response for the method
 message AuthResponse {
-	string status = 1;
-	string message = 2;
+	string email = 1;
+	string name = 2;
+	string token = 3;
 }
 

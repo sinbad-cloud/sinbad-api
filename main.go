@@ -37,7 +37,8 @@ func main() {
 
 	appManager := manager.NewAppManager(db.NewAppRepository(dbClient))
 	deploymentManager := manager.NewDeploymentManager(db.NewDeploymentRepository(dbClient), job.NewDeploymentExecutor())
-	s := cmd.NewServer(c.ServerAddress, appManager, deploymentManager)
+	userManager := manager.NewUserManager(db.NewUserRepository(dbClient))
+	s := cmd.NewServer(c.ServerAddress, appManager, deploymentManager, userManager)
 
 	if err := s.Run(); err != nil {
 		log.Fatal(err)

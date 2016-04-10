@@ -69,8 +69,8 @@ func NewConnection() (*r.Session, error) {
 		return session, nil
 	}
 	session, err = r.Connect(r.ConnectOpts{
-		Addresses: []string{"localhost:28015"},
-		Database:  db,
+		Addresses:     []string{"localhost:28015"},
+		Database:      db,
 		DiscoverHosts: true,
 	})
 	if err != nil {
