@@ -12,9 +12,10 @@ const appTable = "app"
 
 // AppModel represents an app resource
 type AppModel struct {
-	ID     string            `gorethink:"id,omitempty"`
-	User   string            `gorethink:"user,omitempty"` // TODO: array? team?
-	Config map[string]string `gorethink:"config,omitempty"`
+	ID      string            `gorethink:"id,omitempty"`
+	Config  map[string]string `gorethink:"config,omitempty"`
+	RepoURL string            `gorethink:"id,repo_url"`
+	User    string            `gorethink:"user,omitempty"` // TODO: array? team?
 }
 
 type appRepo struct {
@@ -43,9 +44,10 @@ func (ar *appRepo) Get(name string) (*app.App, error) {
 		return nil, err
 	}
 	return &app.App{
-		Name:   model.ID,
-		User:   model.User,
-		Config: model.Config,
+		Name:    model.ID,
+		Config:  model.Config,
+		RepoURL: model.RepoURL,
+		User:    model.User,
 	}, nil
 }
 
@@ -55,9 +57,10 @@ func (ar *appRepo) Create(app *app.App) (string, error) {
 		return "", errors.New("missing required field")
 	}
 	_, err := r.Table(appTable).Insert(AppModel{
-		ID:     app.Name,
-		User:   app.User,
-		Config: app.Config,
+		ID:      app.Name,
+		Config:  app.Config,
+		RepoURL: app.RepoURL,
+		User:    app.User,
 	}).RunWrite(ar.session)
 	if err != nil {
 		return "", err

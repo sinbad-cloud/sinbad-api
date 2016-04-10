@@ -113,13 +113,13 @@ func (s *Server) GetApp(cxt context.Context, a *api.App) (*api.App, error) {
 		log.Errorf("Get app error: %v", err)
 		return nil, escapeError(err)
 	}
-	return &api.App{Name: r.Name, Owner: r.User}, nil
+	return &api.App{Name: r.Name, Config: r.Config, Owner: r.User, Repo: r.RepoURL}, nil
 }
 
 // CreateApp creates an app in the DB
 func (s *Server) CreateApp(cxt context.Context, a *api.App) (*api.AppCreateResponse, error) {
 	log.Infof("Receiving app request %#v with context %#v", a, cxt)
-	_, err := s.AppManager.AppRepo.Create(&app.App{Name: a.Name, User: a.Owner})
+	_, err := s.AppManager.AppRepo.Create(&app.App{Name: a.Name, RepoURL: a.Repo, User: a.Owner})
 
 	if err != nil {
 		log.Errorf("Create app error: %v", err)

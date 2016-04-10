@@ -11,9 +11,10 @@ service AppService {
 
 // App represents an app
 message App {
-	string	name = 1;
-	string	owner = 2;
-	map<string,string> config = 3;
+	string				name = 1;
+	string				owner = 2;
+	map<string,string>	config = 3;
+	string				repo = 4;
 }
 
 // ConfigRequest represents a config request
