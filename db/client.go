@@ -4,6 +4,8 @@ import (
 	r "github.com/dancannon/gorethink"
 )
 
+// TODO: friendly errors
+
 // RethinkClient represents a DB client implementation for rethinkdb
 type RethinkClient struct {
 	session *r.Session

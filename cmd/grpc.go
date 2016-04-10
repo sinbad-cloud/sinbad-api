@@ -11,8 +11,6 @@ import (
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
 	"bitbucket.org/jtblin/kigo-api/pkg/manager"
 
-	"fmt"
-
 	log "github.com/Sirupsen/logrus"
 	"github.com/dchest/uniuri"
 	"golang.org/x/crypto/bcrypt"
@@ -128,6 +126,28 @@ func (s *Server) CreateApp(cxt context.Context, a *api.App) (*api.AppCreateRespo
 		return nil, escapeError(err)
 	}
 	return &api.AppCreateResponse{Name: a.Name}, nil
+}
+
+// GetAppConfig gets the config for an app
+func (s *Server) GetAppConfig(cxt context.Context, cfg *api.ConfigRequest) (*api.ConfigResponse, error) {
+	log.Infof("Getting app config %s with context %#v", cfg.Name, cxt)
+	c, err := s.AppManager.AppRepo.GetConfig(cfg.Name, cfg.Key)
+	if err != nil {
+		log.Errorf("Get app config error: %v", err)
+		return nil, escapeError(err)
+	}
+	return &api.ConfigResponse{Key: cfg.Key, Value: c[cfg.Key]}, nil
+}
+
+// SetAppConfig sets an app config
+func (s *Server) SetAppConfig(cxt context.Context, cfg *api.ConfigRequest) (*api.ConfigResponse, error) {
+	log.Infof("Setting app config %s with context %#v", cfg.Name, cxt)
+	c, err := s.AppManager.AppRepo.SetConfig(cfg.Name, cfg.Key, cfg.Value)
+	if err != nil {
+		log.Errorf("Set app config error: %v", err)
+		return nil, escapeError(err)
+	}
+	return &api.ConfigResponse{Key: cfg.Key, Value: c[cfg.Key]}, nil
 }
 
 func escapeError(err error) error {
