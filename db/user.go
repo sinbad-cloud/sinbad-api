@@ -14,7 +14,7 @@ const hashCost = 9
 
 // UserModel represents an user resource
 type UserModel struct {
-	ID       string `gorethink:"id,omitempty"`
+	ID       string `gorethink:"id"`
 	Name     string `gorethink:"name"`
 	Password []byte `gorethink:"password"`
 	Token    string `gorethink:"token"`
@@ -42,11 +42,12 @@ func (ur *userRepo) Get(email string) (*user.User, error) {
 		Email:    model.ID,
 		Name:     model.Name,
 		Password: string(model.Password),
+		Token:    model.Token,
 	}, nil
 }
 
 // Create creates a new user
-func (ar *userRepo) Create(usr *user.User) (string, error) {
+func (ur *userRepo) Create(usr *user.User) (string, error) {
 	if usr.Email == "" || usr.Password == "" {
 		return "", errors.New("missing required field")
 	}
@@ -55,7 +56,8 @@ func (ar *userRepo) Create(usr *user.User) (string, error) {
 		ID:       usr.Email,
 		Name:     usr.Name,
 		Password: hash,
-	}).RunWrite(ar.session)
+		Token:    usr.Token,
+	}).RunWrite(ur.session)
 	if err != nil {
 		return "", err
 	}
