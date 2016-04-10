@@ -106,7 +106,7 @@ func (s *Server) CreateDeployment(cxt context.Context, d *api.DeploymentRequest)
 	return &api.DeploymentJob{Id: ID}, nil
 }
 
-// GetDeployment gets an app from its name
+// GetApp gets an app from its name
 func (s *Server) GetApp(cxt context.Context, a *api.App) (*api.App, error) {
 	log.Infof("Getting app %s with context %#v", a.Name, cxt)
 	r, err := s.AppManager.AppRepo.Get(a.Name)
@@ -120,14 +120,13 @@ func (s *Server) GetApp(cxt context.Context, a *api.App) (*api.App, error) {
 // CreateApp creates an app in the DB
 func (s *Server) CreateApp(cxt context.Context, a *api.App) (*api.AppCreateResponse, error) {
 	log.Infof("Receiving app request %#v with context %#v", a, cxt)
-	// TODO: ID?
 	_, err := s.AppManager.AppRepo.Create(&app.App{Name: a.Name, User: a.Owner})
 
 	if err != nil {
 		log.Errorf("Create app error: %v", escapeError(err))
 		return nil, err
 	}
-	return &api.AppCreateResponse{Status: "OK"}, nil
+	return &api.AppCreateResponse{Name: a.Name}, nil
 }
 
 func escapeError(err error) error {

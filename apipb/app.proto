@@ -15,6 +15,6 @@ message App {
 
 // AppCreateResponse represents an app creation response
 message AppCreateResponse {
-	string status = 1;
+	string name = 1;
 }
 

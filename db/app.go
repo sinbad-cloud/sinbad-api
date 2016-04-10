@@ -12,8 +12,7 @@ const appTable = "app"
 
 // App represents an app resource
 type AppModel struct {
-	ID   string `gorethink:"id,omitempty"`
-	Name string `gorethink:"name"`
+	ID   string `gorethink:"id"`
 	User string `gorethink:"user"` // TODO: array? team?
 }
 
@@ -29,8 +28,8 @@ func NewAppRepository(c *RethinkClient) app.AppRepository {
 }
 
 // Get returns an app
-func (ar *appRepo) Get(ID string) (*app.App, error) {
-	cursor, err := r.Table(appTable).Get(ID).Run(ar.session)
+func (ar *appRepo) Get(name string) (*app.App, error) {
+	cursor, err := r.Table(appTable).Get(name).Run(ar.session)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +42,7 @@ func (ar *appRepo) Get(ID string) (*app.App, error) {
 		return nil, err
 	}
 	return &app.App{
-		Name: model.Name,
+		Name: model.ID,
 		User: model.User,
 	}, nil
 }
@@ -53,14 +52,14 @@ func (ar *appRepo) Create(app *app.App) (string, error) {
 	if app.Name == "" || app.User == "" {
 		return "", errors.New("missing required field")
 	}
-	response, err := r.Table(appTable).Insert(AppModel{
-		Name: app.Name,
+	_, err := r.Table(appTable).Insert(AppModel{
+		ID:   app.Name,
 		User: app.User,
 	}).RunWrite(ar.session)
 	if err != nil {
 		return "", err
 	}
-	return response.GeneratedKeys[0], nil
+	return app.Name, nil
 }
 
 func init() {
