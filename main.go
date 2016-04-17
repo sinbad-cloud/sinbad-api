@@ -3,6 +3,7 @@ package main
 import (
 	"runtime"
 
+	"bitbucket.org/jtblin/kigo-api/cluster"
 	"bitbucket.org/jtblin/kigo-api/cmd"
 	"bitbucket.org/jtblin/kigo-api/db"
 	"bitbucket.org/jtblin/kigo-api/job"
@@ -35,9 +36,14 @@ func main() {
 		log.Fatal(err)
 	}
 
+	clusterClient, err := cluster.NewClient(c.APIServer, c.APIUser, c.APIToken)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	appManager := manager.NewAppManager(db.NewAppRepository(dbClient))
-	buildManager := manager.NewBuildManager(db.NewBuildRepository(dbClient), job.NewBuildExecutor())
-	deploymentManager := manager.NewDeploymentManager(db.NewDeploymentRepository(dbClient), job.NewDeploymentExecutor())
+	buildManager := manager.NewBuildManager(db.NewBuildRepository(dbClient), job.NewBuildExecutor(clusterClient, c.DockerRegistry, c.BuilderImage, c.Zone))
+	deploymentManager := manager.NewDeploymentManager(db.NewDeploymentRepository(dbClient), job.NewDeploymentExecutor(clusterClient))
 	userManager := manager.NewUserManager(db.NewUserRepository(dbClient))
 	s := cmd.NewServer(c.ServerAddress, appManager, buildManager, deploymentManager, userManager)
 
@@ -45,7 +51,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	w := cmd.NewWorker(c.APIServer, c.APIUser, c.APIToken, c.DockerRegistry, c.BuilderImage, c.Zone, buildManager, deploymentManager)
+	w := cmd.NewWorker(buildManager, deploymentManager)
 	if err := w.Run(); err != nil {
 		log.Fatal(err)
 	}

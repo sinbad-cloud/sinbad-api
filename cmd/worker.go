@@ -8,22 +8,15 @@ import (
 
 // Worker is a representation of a worker
 type Worker struct {
-	BuilderImage      string
-	DockerRegistry    string
-	Zone              string
-
 	BuildManager      *manager.BuildManager
 	DeploymentManager *manager.DeploymentManager
 }
 
 // NewWorker creates a new worker
-func NewWorker(khost, kusername, ktoken, dockerRegistry, image, zone string, buildManager *manager.BuildManager, deploymentManager *manager.DeploymentManager) *Worker {
+func NewWorker(buildManager *manager.BuildManager, deploymentManager *manager.DeploymentManager) *Worker {
 	return &Worker{
 		BuildManager:      buildManager,
 		DeploymentManager: deploymentManager,
-		BuilderImage:      image,
-		DockerRegistry:    dockerRegistry,
-		Zone:              zone,
 	}
 }
 

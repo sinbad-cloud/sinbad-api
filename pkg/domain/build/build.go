@@ -25,6 +25,7 @@ type BuildRepository interface {
 // BuildExecutor represents a build job interface
 type BuildExecutor interface {
 	Schedule(*Build) error
+	// TODO: Status(string) (JobStatus, error)
 }
 
 type buildQueue chan *Build

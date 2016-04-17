@@ -27,6 +27,26 @@ type buildRepo struct {
 	*RethinkClient
 }
 
+// WatchBuilds watch builds and send to queue
+func (c *RethinkClient) watchBuilds() error {
+	cursor, err := r.Table(buildTable).Changes().Run(c.session)
+	if err != nil {
+		return err
+	}
+	go func() {
+		var model BuildModel
+		// TODO: use channel and cursor.Listen instead?
+		// TODO: check if new or updated or deleted
+		// i.e. newValue != nil, oldValue != nil
+		for cursor.Next(&model) {
+			build.Enqueue(&build.Build{
+			// TODO: fill this in
+			})
+		}
+	}()
+	return nil
+}
+
 // NewBuildRepository is an implementation for a BuildRepository
 func NewBuildRepository(c *RethinkClient) build.BuildRepository {
 	return &buildRepo{

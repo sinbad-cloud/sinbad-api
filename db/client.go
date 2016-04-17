@@ -23,5 +23,8 @@ func NewClient() (*RethinkClient, error) {
 	if err = client.watchDeployments(); err != nil {
 		return client, err
 	}
+	if err = client.watchBuilds(); err != nil {
+		return client, err
+	}
 	return client, nil
 }

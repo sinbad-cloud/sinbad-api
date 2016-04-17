@@ -6,5 +6,3 @@ const (
 	_                  = iota
 	DEPLOYMENT JobType = 1 << (10 * iota)
 )
-
-// generic kubernetes stuff

@@ -1,10 +1,13 @@
 package job
 
 import (
+	"bitbucket.org/jtblin/kigo-api/cluster"
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
 )
 
-type deploymentExec struct{}
+type deploymentExec struct {
+	client *cluster.Client
+}
 
 // DeploymentJob represents a deployment job
 type DeploymentJob struct {
@@ -13,8 +16,8 @@ type DeploymentJob struct {
 }
 
 // NewDeploymentExecutor returns a new deployment executor
-func NewDeploymentExecutor() *deploymentExec {
-	return &deploymentExec{}
+func NewDeploymentExecutor(client *cluster.Client) *deploymentExec {
+	return &deploymentExec{client: client}
 }
 
 func (de *deploymentExec) Schedule(d *deployment.Deployment) error {
