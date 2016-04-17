@@ -17,7 +17,8 @@ setup:
 	go get -v -u github.com/alecthomas/gometalinter
 	go get -v -u github.com/jstemmer/go-junit-report
 	gometalinter --install --update
-	glide install
+	go get github.com/tools/godep
+	godep restore
 
 build: *.go fmt
 	go build -o build/bin/$(ARCH)/$(BINARY_NAME) $(GOBUILD_VERSION_ARGS) $(REPO_PATH)
@@ -51,6 +52,7 @@ profile:
 
 protobuf:
 	protoc -I ./apipb apipb/*.proto --go_out=plugins=grpc:apipb
+	sed -i '' 's|"google/protobuf"|"github.com/golang/protobuf/ptypes/timestamp"|' apipb/*.go
 
 watch:
 	CompileDaemon -color=true -build "make test check"

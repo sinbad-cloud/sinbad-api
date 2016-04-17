@@ -8,6 +8,7 @@ Package api is a generated protocol buffer package.
 It is generated from these files:
 	app.proto
 	auth.proto
+	build.proto
 	deployment.proto
 
 It has these top-level messages:
@@ -17,6 +18,10 @@ It has these top-level messages:
 	AppCreateResponse
 	User
 	AuthResponse
+	CreateBuildRequest
+	CreateBuildResponse
+	GetBuildRequest
+	GetBuildResponse
 	DeploymentRequest
 	DeploymentJob
 	DeploymentResponse

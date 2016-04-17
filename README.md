@@ -23,18 +23,18 @@ The entities for the use cases are:
 
 The use cases are:
 
-* schedule a deployment job
-* get status a deployment job
-* schedule a build job
-* get status a build job
-* create an app
-* retrieve an app
-* manage app config
-* build an app
-* deploy an app
-* sign up for an account
-* sign in
-* reset password
+* [x] create a deployment job
+* [ ] deploy an app
+* [ ] get status a deployment job
+* [x] create a build job
+* [ ] build an app
+* [ ] get status a build job
+* [x] create an app
+* [x] retrieve an app
+* [x] manage app config
+* [x] sign up for an account
+* [x] sign in
+* [ ] reset password
 
 ### Interfaces
 

@@ -31,7 +31,7 @@ type DeploymentRequest struct {
 func (m *DeploymentRequest) Reset()                    { *m = DeploymentRequest{} }
 func (m *DeploymentRequest) String() string            { return proto.CompactTextString(m) }
 func (*DeploymentRequest) ProtoMessage()               {}
-func (*DeploymentRequest) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+func (*DeploymentRequest) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
 
 // DeploymentJob represents a deployment job
 type DeploymentJob struct {
@@ -41,7 +41,7 @@ type DeploymentJob struct {
 func (m *DeploymentJob) Reset()                    { *m = DeploymentJob{} }
 func (m *DeploymentJob) String() string            { return proto.CompactTextString(m) }
 func (*DeploymentJob) ProtoMessage()               {}
-func (*DeploymentJob) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+func (*DeploymentJob) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
 
 // DeploymentResponse represents a deployment response
 type DeploymentResponse struct {
@@ -51,7 +51,7 @@ type DeploymentResponse struct {
 func (m *DeploymentResponse) Reset()                    { *m = DeploymentResponse{} }
 func (m *DeploymentResponse) String() string            { return proto.CompactTextString(m) }
 func (*DeploymentResponse) ProtoMessage()               {}
-func (*DeploymentResponse) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{2} }
+func (*DeploymentResponse) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{2} }
 
 func init() {
 	proto.RegisterType((*DeploymentRequest)(nil), "api.DeploymentRequest")
@@ -151,7 +151,7 @@ var _DeploymentService_serviceDesc = grpc.ServiceDesc{
 	Streams: []grpc.StreamDesc{},
 }
 
-var fileDescriptor2 = []byte{
+var fileDescriptor3 = []byte{
 	// 250 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x74, 0x51, 0xcd, 0x4a, 0xc4, 0x30,
 	0x10, 0xde, 0x6e, 0xb7, 0xab, 0x0e, 0xac, 0xd4, 0x41, 0x24, 0xf4, 0xe2, 0x92, 0x93, 0xa7, 0x1c,

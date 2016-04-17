@@ -36,15 +36,16 @@ func main() {
 	}
 
 	appManager := manager.NewAppManager(db.NewAppRepository(dbClient))
+	buildManager := manager.NewBuildManager(db.NewBuildRepository(dbClient), job.NewBuildExecutor())
 	deploymentManager := manager.NewDeploymentManager(db.NewDeploymentRepository(dbClient), job.NewDeploymentExecutor())
 	userManager := manager.NewUserManager(db.NewUserRepository(dbClient))
-	s := cmd.NewServer(c.ServerAddress, appManager, deploymentManager, userManager)
+	s := cmd.NewServer(c.ServerAddress, appManager, buildManager, deploymentManager, userManager)
 
 	if err := s.Run(); err != nil {
 		log.Fatal(err)
 	}
 
-	w := cmd.NewWorker(deploymentManager)
+	w := cmd.NewWorker(c.APIServer, c.APIUser, c.APIToken, c.DockerRegistry, c.BuilderImage, c.Zone, buildManager, deploymentManager)
 	if err := w.Run(); err != nil {
 		log.Fatal(err)
 	}

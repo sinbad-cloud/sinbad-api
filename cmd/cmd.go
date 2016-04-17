@@ -4,21 +4,37 @@ import "github.com/spf13/pflag"
 
 // Cmd is a representation of a cmd params
 type Cmd struct {
-	LogJSON       bool
-	ServerAddress string
-	Verbose       bool
-	Version       bool
+	APIServer      string
+	APIToken       string
+	APIUser        string
+	BuilderImage   string
+	DockerRegistry string
+	ServerAddress  string
+	Zone           string
+	LogJSON        bool
+	Verbose        bool
+	Version        bool
 }
 
 // NewCmd creates a new cmd struct
 func NewCmd() *Cmd {
 	return &Cmd{
-		ServerAddress: ":5080",
+		APIServer:      "http://192.168.64.2:8080", // Mac OSX kube-solo
+		BuilderImage:   "jtblin/kigo-builder:latest",
+		DockerRegistry: "jtblin",
+		ServerAddress:  ":5080",
+		Zone:           "connectapp.cloud",
 	}
 }
 
 // AddFlags adds flags to the specified FlagSet
 func (c *Cmd) AddFlags(fs *pflag.FlagSet) {
+	fs.StringVar(&c.APIServer, "api-server", c.APIServer, "Endpoint for the k8s api server")
+	fs.StringVar(&c.APIToken, "api-token", c.APIToken, "Token to authenticate with the  k8sapi server")
+	fs.StringVar(&c.APIUser, "api-user", c.APIUser, "User to authenticate with the k8s api server")
+	fs.StringVar(&c.BuilderImage, "builder-image", c.BuilderImage, "Image for builder job")
+	fs.StringVar(&c.Zone, "dns-zone", c.Zone, "DNS zone to which to deploy services")
+	fs.StringVar(&c.DockerRegistry, "docker-registry", c.DockerRegistry, "Docker registry to push images")
 	fs.BoolVar(&c.LogJSON, "log-json", false, "Log as JSON")
 	fs.StringVar(&c.ServerAddress, "server-addr", c.ServerAddress, "Address to listen on e.g. :80")
 	fs.BoolVar(&c.Verbose, "verbose", false, "Verbose")

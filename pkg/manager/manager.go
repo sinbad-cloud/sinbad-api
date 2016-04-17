@@ -4,6 +4,7 @@ package manager
 
 import (
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/app"
+	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
 )
@@ -17,6 +18,20 @@ type AppManager struct {
 func NewAppManager(appRepo app.AppRepository) *AppManager {
 	return &AppManager{
 		AppRepo: appRepo,
+	}
+}
+
+// BuildManager performs build-related "business-logic" functions on a build and related objects.
+type BuildManager struct {
+	BuildRepo build.BuildRepository
+	BuildExec build.BuildExecutor
+}
+
+// NewBuildManager initialises a new build manager
+func NewBuildManager(buildRepo build.BuildRepository, buildExec build.BuildExecutor) *BuildManager {
+	return &BuildManager{
+		BuildRepo: buildRepo,
+		BuildExec: buildExec,
 	}
 }
 

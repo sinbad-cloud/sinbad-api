@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net"
 	"strings"
+	"time"
 
 	"bitbucket.org/jtblin/kigo-api/apipb"
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/app"
@@ -11,6 +12,7 @@ import (
 	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
 	"bitbucket.org/jtblin/kigo-api/pkg/manager"
 
+	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
 	log "github.com/Sirupsen/logrus"
 	"github.com/dchest/uniuri"
 	"golang.org/x/crypto/bcrypt"
@@ -22,17 +24,17 @@ import (
 type Server struct {
 	Address           string
 	AppManager        *manager.AppManager
+	BuildManager      *manager.BuildManager
 	DeploymentManager *manager.DeploymentManager
 	UserManager       *manager.UserManager
-	Verbose           bool
-	Version           bool
 }
 
 // NewServer creates a new server
-func NewServer(addr string, appManager *manager.AppManager, deploymentManager *manager.DeploymentManager, userManager *manager.UserManager) *Server {
+func NewServer(addr string, appManager *manager.AppManager, buildManager *manager.BuildManager, deploymentManager *manager.DeploymentManager, userManager *manager.UserManager) *Server {
 	return &Server{
 		Address:           addr,
 		AppManager:        appManager,
+		BuildManager:      buildManager,
 		DeploymentManager: deploymentManager,
 		UserManager:       userManager,
 	}
@@ -46,6 +48,7 @@ func (s *Server) Run() error {
 	}
 	grpcServer := grpc.NewServer()
 	api.RegisterAppServiceServer(grpcServer, s)
+	api.RegisterBuildServiceServer(grpcServer, s)
 	api.RegisterDeploymentServiceServer(grpcServer, s)
 	api.RegisterAuthServiceServer(grpcServer, s)
 	return grpcServer.Serve(listener)
@@ -148,6 +151,40 @@ func (s *Server) SetAppConfig(cxt context.Context, cfg *api.ConfigRequest) (*api
 		return nil, escapeError(err)
 	}
 	return &api.ConfigResponse{Key: cfg.Key, Value: c[cfg.Key]}, nil
+}
+
+// GetBuild gets a build from its ID
+func (s *Server) GetBuild(cxt context.Context, b *api.GetBuildRequest) (*api.GetBuildResponse, error) {
+	log.Infof("Getting build %s with context %#v", b.Id, cxt)
+	r, err := s.BuildManager.BuildRepo.Get(b.Id)
+	if err != nil {
+		log.Errorf("Get app error: %v", err)
+		return nil, escapeError(err)
+	}
+	return &api.GetBuildResponse{
+		Id: r.ID,
+		// TODO: returns entire build or status?
+	}, nil
+}
+
+// CreateBuild creates a new build
+func (s *Server) CreateBuild(cxt context.Context, b *api.CreateBuildRequest) (*api.CreateBuildResponse, error) {
+	log.Infof("Receiving build request %#v with context %#v", b, cxt)
+	ID, err := s.BuildManager.BuildRepo.Create(&build.Build{
+		App:          b.App,
+		Author:       b.Author,
+		Commit:       b.Commit,
+		Organization: b.Organisation,
+		Origin:       b.Origin,
+		Repository:   b.Repository,
+		Timestamp:    time.Unix(b.Timestamp.Seconds, int64(b.Timestamp.Nanos)),
+	})
+
+	if err != nil {
+		log.Errorf("Create app error: %v", err)
+		return nil, escapeError(err)
+	}
+	return &api.CreateBuildResponse{Id: ID}, nil
 }
 
 func escapeError(err error) error {

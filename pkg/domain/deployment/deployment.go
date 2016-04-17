@@ -23,10 +23,10 @@ type Deployment struct {
 	Zone     string
 }
 
-type deloymentChan chan *Deployment
+type deloymentQueue chan *Deployment
 
 // Queue serves to communicate new deployment events between db and domain
-var Queue deloymentChan
+var Queue deloymentQueue
 
 // Enqueue adds a deployment to the channel
 func Enqueue(d *Deployment) {

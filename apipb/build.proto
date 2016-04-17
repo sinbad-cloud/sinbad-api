@@ -1,0 +1,36 @@
+syntax = "proto3";
+package api;
+import "google/protobuf/timestamp.proto";
+
+// BuildService is an App service
+service BuildService {
+	rpc CreateBuild (CreateBuildRequest) returns (CreateBuildResponse) {}
+	rpc GetBuild (GetBuildRequest) returns (GetBuildResponse) {}
+}
+
+// CreateBuildRequest represents a build creation request
+message CreateBuildRequest {
+	string						app				= 1;
+	string						author			= 2;
+	string						commit			= 3;
+	string						organisation	= 4;
+	string						origin			= 5;
+	string						repository 		= 6;
+	google.protobuf.Timestamp	timestamp 		= 7;
+}
+
+// CreateBuildResponse represents a build creation response
+message CreateBuildResponse {
+	string	id = 1;
+}
+
+// GetBuildRequest represents a build request
+message GetBuildRequest {
+	string	id = 1;
+}
+
+// GetBuildResponse represents a build creation response
+message GetBuildResponse {
+	string	id 		= 1;
+	string	status	= 2;
+}
