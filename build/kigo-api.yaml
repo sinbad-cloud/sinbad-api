@@ -1,0 +1,56 @@
+---
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    name: kigo-api
+  spec:
+    rules:
+    - host: kigo-api.atlassian.io
+      http:
+        paths:
+        - backend:
+            serviceName: kigo-api
+            servicePort: 80
+          path: /
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: kigo-api
+    labels:
+      name: kigo-api
+  spec:
+    type: LoadBalancer
+    ports:
+      - port: 80
+        targetPort: 5080
+    selector:
+      name: kigo-api
+---
+  apiVersion: v1
+  kind: ReplicationController
+  metadata:
+    name: kigo-api
+    labels:
+      name: kigo-api
+  spec:
+    replicas: 3
+    selector:
+      name: kigo-api
+    template:
+      metadata:
+        labels:
+          name: kigo-api
+      spec:
+        containers:
+          - name: kigo-api
+            image: jtblin/kigo-api:latest
+            imagePullPolicy: Always
+            args:
+              - "--api-server="
+              - "--app-port=5080"
+              - "--builder-image=jtblin/kigo-builder:latest"
+              - "--docker-registry=gcr.io/jerome-1209"
+              - "--dns-zone=connectapp.cloud"
+            ports:
+              - containerPort: 5080
