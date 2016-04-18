@@ -31,11 +31,7 @@ func main() {
 		version.PrintVersionAndExit()
 	}
 
-	dbClient, err := db.NewClient()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	dbClient := db.NewClient(c.DBAddress)
 	clusterClient, err := cluster.NewClient(c.APIServer, c.APIUser, c.APIToken)
 	if err != nil {
 		log.Fatal(err)

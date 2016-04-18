@@ -63,13 +63,13 @@ func initDB() error {
 }
 
 // NewConnection returns a singleton rethinkdb connection
-func NewConnection() (*r.Session, error) {
+func NewConnection(dbAddress string) (*r.Session, error) {
 	var err error
 	if session != nil {
 		return session, nil
 	}
 	session, err = r.Connect(r.ConnectOpts{
-		Addresses:     []string{"localhost:28015"},
+		Addresses:     []string{dbAddress},
 		Database:      db,
 		DiscoverHosts: true,
 	})

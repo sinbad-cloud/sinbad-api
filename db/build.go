@@ -24,11 +24,11 @@ type BuildModel struct {
 }
 
 type buildRepo struct {
-	*RethinkClient
+	*rethinkClient
 }
 
 // WatchBuilds watch builds and send to queue
-func (c *RethinkClient) watchBuilds() error {
+func (c *rethinkClient) watchBuilds() error {
 	cursor, err := r.Table(buildTable).Changes().Run(c.session)
 	if err != nil {
 		return err
@@ -48,9 +48,9 @@ func (c *RethinkClient) watchBuilds() error {
 }
 
 // NewBuildRepository is an implementation for a BuildRepository
-func NewBuildRepository(c *RethinkClient) build.BuildRepository {
+func NewBuildRepository(c *rethinkClient) build.BuildRepository {
 	return &buildRepo{
-		RethinkClient: c,
+		rethinkClient: c,
 	}
 }
 

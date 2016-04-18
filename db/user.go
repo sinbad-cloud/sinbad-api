@@ -21,7 +21,7 @@ type UserModel struct {
 }
 
 type userRepo struct {
-	*RethinkClient
+	*rethinkClient
 }
 
 // Get returns a user
@@ -65,9 +65,9 @@ func (ur *userRepo) Create(usr *user.User) (string, error) {
 }
 
 // NewUserRepository is an implementation for a UserRepository
-func NewUserRepository(c *RethinkClient) user.UserRepository {
+func NewUserRepository(c *rethinkClient) user.UserRepository {
 	return &userRepo{
-		RethinkClient: c,
+		rethinkClient: c,
 	}
 }
 

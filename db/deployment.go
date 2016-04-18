@@ -23,18 +23,18 @@ type DeploymentModel struct {
 }
 
 type deploymentRepo struct {
-	*RethinkClient
+	*rethinkClient
 }
 
 // NewDeploymentRepository is an implementation for an DeploymentRepository
-func NewDeploymentRepository(c *RethinkClient) deployment.DeploymentRepository {
+func NewDeploymentRepository(c *rethinkClient) deployment.DeploymentRepository {
 	return &deploymentRepo{
-		RethinkClient: c,
+		rethinkClient: c,
 	}
 }
 
 // WatchDeployments watch deployments and send to queue
-func (c *RethinkClient) watchDeployments() error {
+func (c *rethinkClient) watchDeployments() error {
 	cursor, err := r.Table(deploymentTable).Changes().Run(c.session)
 	if err != nil {
 		return err

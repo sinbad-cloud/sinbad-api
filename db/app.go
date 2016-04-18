@@ -19,13 +19,13 @@ type AppModel struct {
 }
 
 type appRepo struct {
-	*RethinkClient
+	*rethinkClient
 }
 
 // NewAppRepository is an implementation for an AppRepository
-func NewAppRepository(c *RethinkClient) app.AppRepository {
+func NewAppRepository(c *rethinkClient) app.AppRepository {
 	return &appRepo{
-		RethinkClient: c,
+		rethinkClient: c,
 	}
 }
 
