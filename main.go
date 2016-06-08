@@ -3,15 +3,15 @@ package main
 import (
 	"runtime"
 
-	"bitbucket.org/jtblin/kigo-api/cluster"
-	"bitbucket.org/jtblin/kigo-api/cmd"
-	"bitbucket.org/jtblin/kigo-api/db"
-	"bitbucket.org/jtblin/kigo-api/job"
-	"bitbucket.org/jtblin/kigo-api/pkg/manager"
-	"bitbucket.org/jtblin/kigo-api/version"
-
 	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/pflag"
+
+	"github.com/sinbad-cloud/sinbad-api/cluster"
+	"github.com/sinbad-cloud/sinbad-api/cmd"
+	"github.com/sinbad-cloud/sinbad-api/db"
+	"github.com/sinbad-cloud/sinbad-api/job"
+	"github.com/sinbad-cloud/sinbad-api/pkg/manager"
+	"github.com/sinbad-cloud/sinbad-api/version"
 )
 
 func main() {

@@ -3,9 +3,9 @@ package db
 import (
 	"errors"
 
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
-
 	r "github.com/dancannon/gorethink"
+
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/deployment"
 )
 
 const deploymentTable = "deployment"

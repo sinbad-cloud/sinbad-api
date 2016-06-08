@@ -3,10 +3,10 @@ package db
 import (
 	"errors"
 
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
-
 	r "github.com/dancannon/gorethink"
 	"golang.org/x/crypto/bcrypt"
+
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/user"
 )
 
 const userTable = "user"

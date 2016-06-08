@@ -3,13 +3,13 @@ package job
 import (
 	"fmt"
 
-	"bitbucket.org/jtblin/kigo-api/cluster"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
-
 	log "github.com/Sirupsen/logrus"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/unversioned"
 	"k8s.io/kubernetes/pkg/apis/extensions"
+
+	"github.com/sinbad-cloud/sinbad-api/cluster"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/build"
 )
 
 const (

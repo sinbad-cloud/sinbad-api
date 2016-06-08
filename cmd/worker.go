@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
-	"bitbucket.org/jtblin/kigo-api/pkg/manager"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/build"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/deployment"
+	"github.com/sinbad-cloud/sinbad-api/pkg/manager"
 )
 
 // Worker is a representation of a worker

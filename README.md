@@ -1,4 +1,4 @@
-# kigo-api
+# sinbad-api
 
 ## Generate protobuf code
 

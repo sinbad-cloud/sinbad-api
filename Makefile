@@ -1,5 +1,5 @@
-BINARY_NAME := kigo-api
-ORG_PATH="bitbucket.org/jtblin"
+BINARY_NAME := sinbad-api
+ORG_PATH="github.com/sinbad-cloud"
 REPO_PATH="$(ORG_PATH)/$(BINARY_NAME)"
 VERSION_VAR := $(REPO_PATH)/version.Version
 GIT_VAR := $(REPO_PATH)/version.GitCommit
@@ -8,7 +8,7 @@ REPO_VERSION := $$(git describe --abbrev=0 --tags)
 BUILD_DATE := $$(date +%Y-%m-%d-%H:%M)
 GIT_HASH := $$(git rev-parse --short HEAD)
 GOBUILD_VERSION_ARGS := -ldflags "-s -X $(VERSION_VAR)=$(REPO_VERSION) -X $(GIT_VAR)=$(GIT_HASH) -X $(BUILD_DATE_VAR)=$(BUILD_DATE)"
-IMAGE_NAME := jtblin/$(BINARY_NAME)
+IMAGE_NAME := sinbad/$(BINARY_NAME)
 ARCH ?= darwin
 
 setup:

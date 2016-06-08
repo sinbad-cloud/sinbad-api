@@ -21,11 +21,11 @@ type Cmd struct {
 func NewCmd() *Cmd {
 	return &Cmd{
 		APIServer:      "http://192.168.64.2:8080", // Mac OSX kube-solo
-		BuilderImage:   "jtblin/kigo-builder:latest",
+		BuilderImage:   "sinbad/sinbad-builder:latest",
 		DBAddress:      "localhost:28015",
 		DockerRegistry: "jtblin",
 		ServerAddress:  ":5080",
-		Zone:           "connectapp.cloud",
+		Zone:           "sinbad.cloud",
 	}
 }
 

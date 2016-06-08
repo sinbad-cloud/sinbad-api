@@ -1,5 +1,5 @@
 {
-	"ImportPath": "bitbucket.org/jtblin/kigo-api",
+	"ImportPath": "github.com/sinbad-cloud/sinbad-api",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Deps": [

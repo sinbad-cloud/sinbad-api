@@ -1,8 +1,8 @@
 package job
 
 import (
-	"bitbucket.org/jtblin/kigo-api/cluster"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
+	"github.com/sinbad-cloud/sinbad-api/cluster"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/deployment"
 )
 
 type deploymentExec struct {

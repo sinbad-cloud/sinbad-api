@@ -7,12 +7,12 @@ import (
 	"os"
 	"strings"
 
-	"bitbucket.org/jtblin/kigo-api/apipb"
-
 	log "github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+
+	"github.com/sinbad-cloud/sinbad-api/apipb"
 )
 
 const (
@@ -140,9 +140,9 @@ func newCreateCommand(out io.Writer) *cobra.Command {
 	options := &createOptions{}
 	cmd := &cobra.Command{
 		Use:     "create TYPE",
-		Example: "kigoctl create user",
-		Short:   "kigoctl create user from the API",
-		Long:    "kigoctl create user from the API",
+		Example: "sinbadctl create user",
+		Short:   "sinbadctl create user from the API",
+		Long:    "sinbadctl create user from the API",
 		Run: func(cmd *cobra.Command, args []string) {
 			checkErr(runCreate(cmd, out, args, options), fatal)
 		},
@@ -163,9 +163,9 @@ func newGetCommand(out io.Writer) *cobra.Command {
 	options := &getOptions{}
 	cmd := &cobra.Command{
 		Use:     "get TYPE [ID]",
-		Example: "kigoctl get users",
-		Short:   "kigoctl get resources from the API",
-		Long:    "kigoctl get resources from the API",
+		Example: "sinbadctl get users",
+		Short:   "sinbadctl get resources from the API",
+		Long:    "sinbadctl get resources from the API",
 		Run: func(cmd *cobra.Command, args []string) {
 			checkErr(runGet(cmd, out, args, options), fatal)
 		},
@@ -175,9 +175,9 @@ func newGetCommand(out io.Writer) *cobra.Command {
 
 func newCmd(in io.Reader, out, err io.Writer) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "kigoctl",
-		Short: "kigoctl communicates with kigo-api",
-		Long:  "kigoctl communicates with kigo-api",
+		Use:   "sinbadctl",
+		Short: "sinbadctl communicates with sinbad-api",
+		Long:  "sinbadctl communicates with sinbad-api",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.Help()
 		},

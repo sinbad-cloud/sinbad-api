@@ -4,9 +4,9 @@ import (
 	"errors"
 	"time"
 
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
-
 	r "github.com/dancannon/gorethink"
+
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/build"
 )
 
 const buildTable = "build"

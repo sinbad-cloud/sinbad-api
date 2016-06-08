@@ -2,54 +2,54 @@
   apiVersion: extensions/v1beta1
   kind: Ingress
   metadata:
-    name: kigo-api
+    name: sinbad-api
   spec:
     rules:
-    - host: kigo-api.atlassian.io
+    - host: sinbad-api.sinbad.cloud
       http:
         paths:
         - backend:
-            serviceName: kigo-api
+            serviceName: sinbad-api
             servicePort: 80
           path: /
 ---
   apiVersion: v1
   kind: Service
   metadata:
-    name: kigo-api
+    name: sinbad-api
     labels:
-      name: kigo-api
+      name: sinbad-api
   spec:
     type: LoadBalancer
     ports:
       - port: 80
         targetPort: 5080
     selector:
-      name: kigo-api
+      name: sinbad-api
 ---
   apiVersion: v1
   kind: ReplicationController
   metadata:
-    name: kigo-api
+    name: sinbad-api
     labels:
-      name: kigo-api
+      name: sinbad-api
   spec:
     replicas: 3
     selector:
-      name: kigo-api
+      name: sinbad-api
     template:
       metadata:
         labels:
-          name: kigo-api
+          name: sinbad-api
       spec:
         containers:
-          - name: kigo-api
-            image: jtblin/kigo-api:latest
+          - name: sinbad-api
+            image: jtblin/sinbad-api:latest
             imagePullPolicy: Always
             args:
               - "--api-server="
               - "--app-port=5080"
-              - "--builder-image=jtblin/kigo-builder:latest"
+              - "--builder-image=sinbad/sinbad-builder:latest"
               - "--docker-registry=gcr.io/jerome-1209"
               - "--dns-zone=connectapp.cloud"
             ports:

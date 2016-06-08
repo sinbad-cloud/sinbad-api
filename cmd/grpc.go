@@ -6,18 +6,18 @@ import (
 	"strings"
 	"time"
 
-	"bitbucket.org/jtblin/kigo-api/apipb"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/app"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
-	"bitbucket.org/jtblin/kigo-api/pkg/manager"
-
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
 	log "github.com/Sirupsen/logrus"
 	"github.com/dchest/uniuri"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+
+	"github.com/sinbad-cloud/sinbad-api/apipb"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/app"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/build"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/deployment"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/user"
+	"github.com/sinbad-cloud/sinbad-api/pkg/manager"
 )
 
 // Server is a representation of an API server

@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	db = "kigo"
+	db = "sinbad"
 )
 
 var session *r.Session

@@ -3,10 +3,10 @@
 package manager
 
 import (
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/app"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/build"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/deployment"
-	"bitbucket.org/jtblin/kigo-api/pkg/domain/user"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/app"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/build"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/deployment"
+	"github.com/sinbad-cloud/sinbad-api/pkg/domain/user"
 )
 
 // AppManager performs app-related "business-logic" functions on an app and related objects.
